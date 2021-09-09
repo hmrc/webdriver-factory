@@ -14,7 +14,7 @@ testDependencies += "uk.gov.hmrc" %% "webdriver-factory % "x.x.x"
 ```
 Replace `x.x.x` with a valid webdriver-factory version
 
-You do not need to add any HMRC resolvers in your repo if you use sbt-auto-build. 
+You do not need to add any HMRC resolvers in your repo if you use sbt-auto-build.
 If you need to add any other resolvers, ensure you are using `+=` rather than `:=` to not replace them.
 
 ```scala

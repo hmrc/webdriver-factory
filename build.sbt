@@ -17,5 +17,6 @@ lazy val library = Project(libraryName, file("."))
     majorVersion := 0,
     scalaVersion := "2.11.12",
     crossScalaVersions := Seq("2.11.12", "2.12.10"),
-    libraryDependencies ++= compileDependencies ++ testDependencies
+    libraryDependencies ++= compileDependencies ++ testDependencies,
+    isPublicArtefact := true
   )
