@@ -29,8 +29,7 @@ To create a WebDriver instance, simply call the getInstance() function on the Si
 lazy val webDriver: WebDriver = SingletonDriver.getInstance()
 ```
 
-This returns a WebDriver instance with the library's default browser options for [Chrome](https://github.com/hmrc/webdriver-factory/blob/master/src/main/scala/uk/gov/hmrc/webdriver/BrowserFactory.scala#L47)
-or [Firefox](https://github.com/hmrc/webdriver-factory/blob/master/src/main/scala/uk/gov/hmrc/webdriver/BrowserFactory.scala#L66).
+This returns a WebDriver instance with the library's default browser options for Chrome or Firefox
 
 The library depends on the System property `browser` to determine the type of Driver to instantiate. For example, to create a Chrome browser with Options using the RemoteWebDriver class, do the following:
 ```scala
@@ -47,7 +46,7 @@ The following browser types are supported:
 * `remote-firefox` : for use in the build when creating a Firefox browser with RemoteWebDriver, using the default webdriver hub URL (`http://localhost:4444/wd/hub`)
 * `browserstack` : for use in your local development environment if your tests run against BrowserStack
 
-More detail on each of the supported browser types can be found in the code [here](https://github.com/hmrc/webdriver-factory/blob/master/src/main/scala/uk/gov/hmrc/webdriver/BrowserFactory.scala#L18) 
+More detail on each of the supported browser types can be found in the code [here](src/main/scala/uk/gov/hmrc/webdriver/BrowserFactory.scala) 
 
 
 ### 3. Instantiating a browser with custom options
@@ -67,7 +66,7 @@ lazy val webDriver: WebDriver = SingletonDriver.getInstance(Some(options))
 ## HMRC Build and Test Environment settings
 
 ### Default Browser Options/Capabilities
-Irrespective of whether or not you're testing with Chrome or Firefox, this library attempts to start a browser with the following features:
+Irrespective of whether you're testing with Chrome or Firefox, this library attempts to start a browser with the following features:
 * **A maximised browser window**  
 * **Accepting certificate errors**: we don't want all testing to stop if certificates expire
 * **No infobars** : only appears to be relevant in Chrome.  
@@ -134,7 +133,7 @@ As this library's purpose is to integrate HMRC UI test code with ChromeDriver, G
 Please ensure you have:
 * [geckodriver](https://github.com/mozilla/geckodriver) installed and on your PATH (or set `webdriver.firefox.driver` to point at your installation)
 * [chromedriver](http://chromedriver.chromium.org/) installed and on your PATH (or set `webdriver.chrome.driver` to point at your installation)
-* selenium server running on port 4444 with a single chrome node available.  This can be done by running the [standalone-chrome-debug](https://hub.docker.com/r/selenium/standalone-chrome-debug) docker image ([more details](https://github.com/SeleniumHQ/docker-selenium/blob/master/README.md]))
+* selenium server running on port 4444 with a single chrome node available.  This can be done by running the [standalone-chrome-debug](https://hub.docker.com/r/selenium/standalone-chrome-debug) docker image.
 
 Then execute:
 `sbt test`
@@ -156,6 +155,4 @@ sbt scalafmtCheckAll scalafmtSbtCheck
 
 
 ### Suggestions
-Feel free to reach out to PlatOps or PlatUI on Slack, or submit a PR for review.  
-
-We welcome conversation on how the library could be improved.
+We welcome conversation on how the library could be improved. Open an issue in GitHub or submit a PR for review.
