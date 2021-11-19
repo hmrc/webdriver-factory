@@ -110,7 +110,7 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
       options
         .asMap()
         .get("goog:chromeOptions")
-        .toString should include ("prefs={profile.managed_default_content_settings.javascript=2}")
+        .toString should include("prefs={profile.managed_default_content_settings.javascript=2}")
     }
 
     "return firefoxOptions" in new Setup {
