@@ -30,12 +30,14 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
     System.clearProperty("zap.proxy")
     System.clearProperty("javascript")
     System.clearProperty("accessibility.test")
+    System.clearProperty("disable.javascript")
   }
 
   override def afterEach(): Unit = {
     System.clearProperty("zap.proxy")
     System.clearProperty("javascript")
     System.clearProperty("accessibility.test")
+    System.clearProperty("disable.javascript")
     SingletonDriver.closeInstance()
   }
 
@@ -100,6 +102,15 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
       sys.props.get("zap.proxy").isDefined shouldBe false
       val options: ChromeOptions = browserFactory.chromeOptions(Some(customOptions))
       options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000)"
+    }
+
+    "return chromeOptions with javascript disabled when disable.javascript is true" in new Setup {
+      System.setProperty("disable.javascript", "true")
+      val options: ChromeOptions = browserFactory.chromeOptions(None)
+      options
+        .asMap()
+        .get("goog:chromeOptions")
+        .toString should include ("prefs={profile.managed_default_content_settings.javascript=2}")
     }
 
     "return firefoxOptions" in new Setup {
@@ -210,5 +221,11 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
       )
     }
 
+    "return firefoxOptions with javascript disabled configuration when disable.javascript is true " in new Setup {
+      System.setProperty("disable.javascript", "true")
+      val options: FirefoxOptions = browserFactory.firefoxOptions(None)
+      println(options.asMap())
+      options.asMap().get("moz:firefoxOptions").toString should include("javascript.enabled=false")
+    }
   }
 }

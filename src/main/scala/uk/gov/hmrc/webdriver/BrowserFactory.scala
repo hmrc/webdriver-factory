@@ -33,6 +33,8 @@ class BrowserFactory extends LazyLogging {
   lazy val zapProxyInEnv: Option[String]                       = sys.props.get("zap.proxy")
   lazy val accessibilityTest: Boolean                          =
     sys.env.getOrElse("ACCESSIBILITY_TEST", sys.props.getOrElse("accessibility.test", "false")).toBoolean
+  lazy val disableJavaScript: Boolean                          =
+    sys.props.getOrElse("disable.javascript", "false").toBoolean
   private val enableProxyForLocalhostRequestsInChrome: String  = "<-loopback>"
   private val enableProxyForLocalhostRequestsInFirefox: String = "network.proxy.allow_hijacking_localhost"
 
@@ -103,6 +105,13 @@ class BrowserFactory extends LazyLogging {
 
         defaultOptions.setExperimentalOption("excludeSwitches", List("enable-automation").asJava)
         defaultOptions.setExperimentalOption("useAutomationExtension", false)
+        if (disableJavaScript) {
+          defaultOptions.setExperimentalOption(
+            "prefs",
+            Map[String, Int]("profile.managed_default_content_settings.javascript" -> 2).asJava
+          )
+          logger.info(s"'javascript.enabled' system property is set to:$disableJavaScript. Disabling JavaScript.")
+        }
         defaultOptions
     }
 
@@ -122,6 +131,10 @@ class BrowserFactory extends LazyLogging {
         defaultOptions.setAcceptInsecureCerts(true)
         defaultOptions.addPreference(enableProxyForLocalhostRequestsInFirefox, true)
         zapConfiguration(defaultOptions)
+        if (disableJavaScript) {
+          defaultOptions.addPreference("javascript.enabled", false)
+          logger.info(s"'javascript.enabled' system property is set to:$disableJavaScript. Disabling JavaScript.")
+        }
         defaultOptions
     }
   }

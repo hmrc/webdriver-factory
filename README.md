@@ -102,6 +102,14 @@ The library will then configure your tests to capture pages for the accessibilit
 
 Further information on how to run your accessibility tests locally can be found [here](https://github.com/hmrc/accessibility-assessment#running-accessibility-assessment-tests-locally).
 
+### Disabling JavaScript
+
+To instantiate a Chrome or Firefox browser with JavaScript disabled, set the `disable.javascript` system property to `true`. 
+
+ ```scala
+ sbt -Dbrowser=remote-chrome -Ddisable.javascript=true test
+ ```
+
 ## Running tests using Browser Stack
 The HMRC MDTP build *does not* support running of Browser Stack tests.  Instantiation of a WebDriver instance for use with Browser Stack is included in the webdriver-factory library for local test execution only.
 
