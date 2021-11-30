@@ -15,8 +15,7 @@ val testDependencies = Seq(
 lazy val library = Project(libraryName, file("."))
   .settings(
     majorVersion := 0,
-    scalaVersion := "2.11.12",
-    crossScalaVersions := Seq("2.11.12", "2.12.10"),
+    scalaVersion := "2.12.12",
     libraryDependencies ++= compileDependencies ++ testDependencies,
     isPublicArtefact := true
   )
