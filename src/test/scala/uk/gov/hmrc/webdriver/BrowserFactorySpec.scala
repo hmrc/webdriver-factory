@@ -236,8 +236,7 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
         browserFactory.chromeOptions(Some(customOptions))
       }
       assert(
-        thrown.getMessage === s"Failed to configure Chrome browser to run accessibility-assessment tests in headless." +
-          s" The accessibility-assessment can only be configured to run with non headless Chrome."
+        thrown.getMessage === s"Headless Chrome not supported with accessibility-assessment tests."
       )
     }
   }
