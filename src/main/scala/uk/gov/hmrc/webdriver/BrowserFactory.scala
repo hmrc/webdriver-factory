@@ -88,6 +88,11 @@ class BrowserFactory extends LazyLogging {
     customOptions match {
       case Some(options) =>
         val userOptions = options.asInstanceOf[ChromeOptions]
+        if (accessibilityTest && userOptions.asMap().get("goog:chromeOptions").toString.contains("headless"))
+          throw AccessibilityAuditConfigurationException(
+            s"Failed to configure Chrome browser to run accessibility-assessment tests in headless." +
+              s" The accessibility-assessment can only be configured to run with non headless Chrome."
+          )
         if (accessibilityTest)
           addPageCaptureChromeExtension(userOptions)
         zapConfiguration(userOptions)

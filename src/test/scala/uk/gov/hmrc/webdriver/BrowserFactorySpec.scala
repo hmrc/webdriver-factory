@@ -227,5 +227,18 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
       println(options.asMap())
       options.asMap().get("moz:firefoxOptions").toString should include("javascript.enabled=false")
     }
+
+    "return error when using chromeOptions headless and when configuring system property accessibility.test true" in new Setup {
+      val thrown: Exception = intercept[Exception] {
+        System.setProperty("accessibility.test", "true")
+        val customOptions = new ChromeOptions()
+        customOptions.setHeadless(true)
+        browserFactory.chromeOptions(Some(customOptions))
+      }
+      assert(
+        thrown.getMessage === s"Failed to configure Chrome browser to run accessibility-assessment tests in headless." +
+          s" The accessibility-assessment can only be configured to run with non headless Chrome."
+      )
+    }
   }
 }
