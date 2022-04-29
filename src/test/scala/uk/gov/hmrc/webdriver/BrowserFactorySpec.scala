@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -236,7 +236,17 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
         browserFactory.chromeOptions(Some(customOptions))
       }
       assert(
-        thrown.getMessage === s"Headless Chrome not supported with accessibility-assessment tests."
+        thrown.getMessage === browserFactory.accessibilityInHeadlessChromeNotSupported
+      )
+    }
+
+    "return error when browser type is headless-chrome and when configuring system property accessibility.test true" in new Setup {
+      val thrown: Exception = intercept[Exception] {
+        System.setProperty("accessibility.test", "true")
+        browserFactory.createBrowser(Some("headless-chrome"), None)
+      }
+      assert(
+        thrown.getMessage === browserFactory.accessibilityInHeadlessChromeNotSupported
       )
     }
   }
