@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ class BrowserFactory extends LazyLogging {
     sys.props.getOrElse("disable.javascript", "false").toBoolean
   private val enableProxyForLocalhostRequestsInChrome: String  = "<-loopback>"
   private val enableProxyForLocalhostRequestsInFirefox: String = "network.proxy.allow_hijacking_localhost"
+  private[webdriver] val accessibilityInHeadlessChromeNotSupported = "Headless Chrome not supported with accessibility-assessment tests."
 
   /*
    * Returns a specific WebDriver instance based on the value of the browserType String and the customOptions passed to the
@@ -64,6 +65,10 @@ class BrowserFactory extends LazyLogging {
     new ChromeDriver(options)
 
   private def headlessChromeInstance(options: ChromeOptions): WebDriver = {
+    if (accessibilityTest)
+      throw AccessibilityAuditConfigurationException(
+        accessibilityInHeadlessChromeNotSupported
+      )
     options.addArguments("headless")
     new ChromeDriver(options)
   }
@@ -187,7 +192,7 @@ class BrowserFactory extends LazyLogging {
   private def addPageCaptureChromeExtension(options: ChromeOptions): Unit = {
     if (options.asMap().get("goog:chromeOptions").toString.contains("headless"))
       throw AccessibilityAuditConfigurationException(
-        s"Headless Chrome not supported with accessibility-assessment tests."
+        accessibilityInHeadlessChromeNotSupported
       )
 
     options.addEncodedExtensions(
