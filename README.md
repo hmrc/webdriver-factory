@@ -100,6 +100,8 @@ export ZAP_HOST=localhost:1234
 To run accessibility tests locally, set the system property `accessibility.test` to `true`. 
 The library will then configure your tests to capture pages for the accessibility-assessment service.
 
+**:warning: It is not possible to run accessibility tests using Chrome Headless.** 
+
 Further information on how to run your accessibility tests locally can be found [here](https://github.com/hmrc/accessibility-assessment#running-accessibility-assessment-tests-locally).
 
 ### Disabling JavaScript
