@@ -27,17 +27,18 @@ import scala.collection.JavaConverters._
 
 class BrowserFactory extends LazyLogging {
 
-  private val defaultSeleniumHubUrl: String                    = "http://localhost:4444/wd/hub"
-  private val defaultZapHost: String                           = "localhost:11000"
-  protected val zapHostInEnv: Option[String]                   = sys.env.get("ZAP_HOST")
-  lazy val zapProxyInEnv: Option[String]                       = sys.props.get("zap.proxy")
-  lazy val accessibilityTest: Boolean                          =
+  private val defaultSeleniumHubUrl: String                        = "http://localhost:4444/wd/hub"
+  private val defaultZapHost: String                               = "localhost:11000"
+  protected val zapHostInEnv: Option[String]                       = sys.env.get("ZAP_HOST")
+  lazy val zapProxyInEnv: Option[String]                           = sys.props.get("zap.proxy")
+  lazy val accessibilityTest: Boolean                              =
     sys.env.getOrElse("ACCESSIBILITY_TEST", sys.props.getOrElse("accessibility.test", "false")).toBoolean
-  lazy val disableJavaScript: Boolean                          =
+  lazy val disableJavaScript: Boolean                              =
     sys.props.getOrElse("disable.javascript", "false").toBoolean
-  private val enableProxyForLocalhostRequestsInChrome: String  = "<-loopback>"
-  private val enableProxyForLocalhostRequestsInFirefox: String = "network.proxy.allow_hijacking_localhost"
-  private[webdriver] val accessibilityInHeadlessChromeNotSupported = "Headless Chrome not supported with accessibility-assessment tests."
+  private val enableProxyForLocalhostRequestsInChrome: String      = "<-loopback>"
+  private val enableProxyForLocalhostRequestsInFirefox: String     = "network.proxy.allow_hijacking_localhost"
+  private[webdriver] val accessibilityInHeadlessChromeNotSupported =
+    "Headless Chrome not supported with accessibility-assessment tests."
 
   /*
    * Returns a specific WebDriver instance based on the value of the browserType String and the customOptions passed to the
