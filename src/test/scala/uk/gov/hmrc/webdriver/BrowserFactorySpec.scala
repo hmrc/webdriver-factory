@@ -18,9 +18,11 @@ package uk.gov.hmrc.webdriver
 
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxOptions
-import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach {
+class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEach {
 
   trait Setup {
     val browserFactory: BrowserFactory = new BrowserFactory()
@@ -213,7 +215,7 @@ class BrowserFactorySpec extends WordSpec with Matchers with BeforeAndAfterEach 
     "return error when using firefoxOptions and when configuring system property accessibility.test true" in new Setup {
       val thrown: Exception = intercept[Exception] {
         System.setProperty("accessibility.test", "true")
-        val options = browserFactory.firefoxOptions(None)
+        browserFactory.firefoxOptions(None)
       }
       assert(
         thrown.getMessage === s"Failed to configure Firefox browser to run accessibility-assessment tests." +
