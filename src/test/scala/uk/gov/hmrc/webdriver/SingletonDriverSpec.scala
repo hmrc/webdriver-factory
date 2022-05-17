@@ -19,10 +19,11 @@ package uk.gov.hmrc.webdriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.remote.{LocalFileDetector, RemoteWebDriver}
 import org.openqa.selenium.{Capabilities, WebDriver}
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class SingletonDriverSpec extends WordSpec with Matchers with MockitoSugar with BeforeAndAfterEach {
+class SingletonDriverSpec extends AnyWordSpec with Matchers with BeforeAndAfterEach {
 
   trait TestSetup extends Driver {}
 
