@@ -58,7 +58,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
     "return chromeOptions with zap proxy configuration when zap.proxy is true" in new Setup {
       System.setProperty("zap.proxy", "true")
       val options: ChromeOptions = browserFactory.chromeOptions(None)
-      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "return chromeOptions with zap proxy configuration when ZAP_HOST environment variable is set" in new Setup {
@@ -69,7 +69,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       val options: ChromeOptions = browserFactory.chromeOptions(None)
       //This check ensures zap configuration is not setup because of zap.proxy system property.
       sys.props.get("zap.proxy").isDefined  shouldBe false
-      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "return userBrowserOptions for Chrome" in new Setup {
@@ -90,7 +90,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       val options: ChromeOptions = browserFactory.chromeOptions(Some(customOptions))
       options.asMap().get("browserName")                 shouldBe "chrome"
       options.asMap().get("goog:chromeOptions").toString shouldBe "{args=[headless], extensions=[]}"
-      options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "return userBrowserOptions with zap proxy for Chrome when ZAP_HOST environment variable is set" in new Setup {
@@ -103,7 +103,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       //This check ensures zap configuration is not setup because of zap.proxy system property.
       sys.props.get("zap.proxy").isDefined shouldBe false
       val options: ChromeOptions = browserFactory.chromeOptions(Some(customOptions))
-      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "return chromeOptions with javascript disabled when disable.javascript is true" in new Setup {
@@ -123,7 +123,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
     "return firefoxOptions with zap proxy configuration when zap.proxy is true " in new Setup {
       System.setProperty("zap.proxy", "true")
       val options: FirefoxOptions = browserFactory.firefoxOptions(None)
-      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "return firefoxOptions with zap proxy configuration when ZAP_HOST environment variable is set" in new Setup {
@@ -133,7 +133,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       //This check ensures zap configuration is not setup because of zap.proxy system property.
       sys.props.get("zap.proxy").isDefined shouldBe false
       val options: FirefoxOptions                 = browserFactory.firefoxOptions(None)
-      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "return userBrowserOptions for firefox" in new Setup {
@@ -154,7 +154,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       val options: FirefoxOptions = browserFactory.firefoxOptions(Some(customOptions))
       options.asMap().get("browserName")                 shouldBe "firefox"
       options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless], prefs={}}"
-      options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "return userBrowserOptions with zap proxy for firefox when ZAP_HOST environment variable is set" in new Setup {
@@ -170,7 +170,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       val options: FirefoxOptions = browserFactory.firefoxOptions(Some(customOptions))
       options.asMap().get("browserName")                 shouldBe "firefox"
       options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless], prefs={}}"
-      options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000)"
+      options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
     "configure browser with ZAP_HOST when both ZAP_HOST and zap.proxy  is set" in new Setup {
@@ -181,7 +181,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
 
       val options: ChromeOptions = browserFactory.chromeOptions(None)
       sys.props.get("zap.proxy")            shouldBe Some("true")
-      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:1234)"
+      options.asMap().get("proxy").toString shouldBe "Proxy(manual, http=localhost:1234, ssl=localhost:1234)"
     }
 
     "throw an exception when ZAP_HOST environment is not of the format 'localhost:port'" in new Setup {

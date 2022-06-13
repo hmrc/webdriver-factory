@@ -175,7 +175,8 @@ class BrowserFactory extends LazyLogging {
         if (options.getBrowserName.equalsIgnoreCase("chrome"))
           enableProxyForLocalhostRequestsInChrome
         else ""
-      options.setCapability(CapabilityType.PROXY, new Proxy().setHttpProxy(host).setNoProxy(noProxy))
+      options.setCapability(CapabilityType.PROXY, new Proxy().setHttpProxy(host).setSslProxy(host).setNoProxy(noProxy))
+      options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true)
       logger.info(s"Zap Configuration Enabled: using $host ")
     }
   }
