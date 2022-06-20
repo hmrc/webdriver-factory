@@ -58,9 +58,9 @@ class Driver extends LazyLogging {
   private def logDriverCapabilities(driver: WebDriver): Unit = {
     val capabilities: Capabilities = driver.asInstanceOf[RemoteWebDriver].getCapabilities
     val browserName                = capabilities.getBrowserName
-    lazy val browserType: String   = sys.env.getOrElse("BROWSER_TYPE", browserName)
+    val browserImage: String       = sys.env.getOrElse("BROWSER_IMAGE", browserName)
 
-    logger.info(s"Browser info: $browserType ${capabilities.getVersion}")
+    logger.info(s"Browser info: $browserImage ${capabilities.getVersion}")
 
     browserName match {
       case "chrome"  => logger.info(s"Driver Version: ${capabilities.getCapability("chrome")}")
