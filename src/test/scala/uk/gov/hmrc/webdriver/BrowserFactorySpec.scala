@@ -141,7 +141,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       customOptions.setHeadless(true)
 
       val options: FirefoxOptions = browserFactory.firefoxOptions(Some(customOptions))
-      options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless], prefs={}}"
+      options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless]}"
       options.asMap().getOrDefault("proxy", None)        shouldBe None
     }
 
@@ -153,7 +153,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
 
       val options: FirefoxOptions = browserFactory.firefoxOptions(Some(customOptions))
       options.asMap().get("browserName")                 shouldBe "firefox"
-      options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless], prefs={}}"
+      options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless]}"
       options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
@@ -169,7 +169,7 @@ class BrowserFactorySpec extends AnyWordSpec with Matchers with BeforeAndAfterEa
       sys.props.get("zap.proxy").isDefined shouldBe false
       val options: FirefoxOptions = browserFactory.firefoxOptions(Some(customOptions))
       options.asMap().get("browserName")                 shouldBe "firefox"
-      options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless], prefs={}}"
+      options.asMap().get("moz:firefoxOptions").toString shouldBe "{args=[-headless]}"
       options.asMap().get("proxy").toString              shouldBe "Proxy(manual, http=localhost:11000, ssl=localhost:11000)"
     }
 
